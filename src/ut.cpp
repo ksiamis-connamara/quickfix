@@ -51,6 +51,7 @@
 #include <PostgreSQLStoreTestCase.cpp>
 #include <SessionIDTestCase.cpp>
 #include <SessionSettingsTestCase.cpp>
+#include <SessionStateTestCase.cpp>
 #include <SessionTestCase.cpp>
 #include <SessionFactoryTestCase.cpp>
 #include <SettingsTestCase.cpp>
