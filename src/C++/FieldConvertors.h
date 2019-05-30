@@ -251,15 +251,17 @@ public:
 
   static std::string convert( double value, int padding = 0, int significant_digits = SIGNIFICANT_DIGITS, int buffer_size = BUFFFER_SIZE )
   {
-    char result[buffer_size];
+    char *result = new char [buffer_size];
     char *end = 0;
 
     int size;
     if( value == 0 || value > 0.0001 || value < -0.0001 )
     {
       size = fast_dtoa( result, buffer_size, value, significant_digits);
-      if( size == 0 )
+      if( size == 0 ) {
+        delete[] result;
         return std::string();
+      }
 
       if( padding > 0 )
       {
@@ -286,8 +288,10 @@ public:
     else
     {
       size = fast_fixed_dtoa( result, buffer_size, value, significant_digits );
-      if( size == 0 )
+      if( size == 0 ) {
+        delete[] result;
         return std::string();
+      }
 
       // strip trailing 0's
       end = result + size - 1;
@@ -311,8 +315,9 @@ public:
         }
       }
    }
-
-   return std::string( result, size );
+   std::string finalResult( result, size );
+   delete[] result;
+   return finalResult;
 }
 
 static bool convert( const std::string& value, double& result )
